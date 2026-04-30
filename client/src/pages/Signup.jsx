@@ -15,11 +15,28 @@ export default function Signup() {
     }
 
     try {
-      await api.post("/auth/signup", { name, email, password });
+      const res = await api.post("/auth/signup", {
+        name,
+        email,
+        password
+      });
+
+      console.log("Signup success:", res.data);
+
       alert("Signup successful");
       navigate("/");
+
     } catch (err) {
-      alert(err.response?.data?.message || "Signup failed");
+      // 🔥 DEBUG LOG (VERY IMPORTANT)
+      console.error("Signup error:", err);
+
+      const message =
+        err.response?.data?.message ||
+        err.response?.data ||
+        err.message ||
+        "Signup failed";
+
+      alert(message);
     }
   };
 
