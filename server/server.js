@@ -1,9 +1,16 @@
-import app from "./app.js";
-import { connectDB } from "./config/db.js";
-import { PORT } from "./config/env.js";
+import express from "express";
+const app = express();
 
-connectDB();
+app.use(express.json());
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+// ✅ Root route
+app.get("/", (req, res) => {
+  res.send("🚀 API is running...");
 });
+
+// your routes
+app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/tasks", taskRoutes);
+
+export default app;
